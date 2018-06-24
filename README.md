@@ -9,4 +9,4 @@ All these components are listed on the [SDL website](https://www.libsdl.org/down
 * SDL_TTF
 
 # Additional notes
-Expect some minor bugs; I made this while I was learning SDL 2 and hadn't a clue about Pragmatic programming. Oh, and by the way - the generation is completely random. That means there are some pipe configurations that might actually be impossible to solve. You've been warned!
+Must be built before it can be run, with relevant SDL 2 dev files etc. Expect some minor bugs; I made this while I was learning SDL 2 and hadn't a clue about Pragmatic programming. Oh, and by the way - the generation is completely random. That means there are some pipe configurations that might actually be impossible to solve. You've been warned!
