@@ -3,8 +3,7 @@ Very simplistic randomly-generated pipe fixing game I made a while ago with SDL 
 
 # Pre-requisites
 All these components are listed on the [SDL website](https://www.libsdl.org/download-2.0.php)
-* SDL 2.0.8 (or greater)
-* SDL_Image
+* SDL 2
 * SDL_Mixer
 * SDL_TTF
 

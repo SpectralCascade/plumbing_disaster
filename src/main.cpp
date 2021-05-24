@@ -2,9 +2,9 @@
 #include <string.h>
 #include <sstream>
 #include <time.h>
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 using namespace std;
 
@@ -1403,7 +1403,8 @@ void close()
     button_skip = NULL;
     button_mute = NULL;
     pipe_texture = NULL;
-    gWindow, gRenderer = NULL;
+    gWindow = NULL;
+    gRenderer = NULL;
 
     TTF_Quit();
     Mix_Quit();
