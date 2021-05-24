@@ -1,5 +1,5 @@
 # plumbing_disaster
-Very simplistic randomly-generated pipe fixing game I made a while ago with SDL 2.
+Very simplistic randomly-generated pipe fixing game I made a while ago with SDL 2. A build exists on [Itch.io](https://spectralcascade.itch.io/plumbing-disaster)
 
 # Pre-requisites
 All these components are listed on the [SDL website](https://www.libsdl.org/download-2.0.php)
