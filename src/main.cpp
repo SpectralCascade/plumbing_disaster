@@ -8,8 +8,8 @@
 
 using namespace std;
 
-const int WIN_W = 700;
-const int WIN_H = 480;
+int winW = 700;
+int winH = 480;
 
 const int BUTTON_W = 120;
 const int BUTTON_H = 80;
@@ -17,7 +17,7 @@ const int BUTTON_H = 80;
 const int BANNER_W = 300;
 const int BANNER_H = 240;
 
-const SDL_Rect gWindowRect = {0, 0, WIN_W, WIN_H};
+SDL_Rect gWindowRect = {0, 0, 700, 480};
 
 bool workingTime = true;
 
@@ -76,7 +76,8 @@ const int TOTAL_ROWS = 10;
 const int TOTAL_COLUMNS = 10;
 
 // pipe dimensions
-const int PIPE_DIM = 48;
+int pipeDim = 48;
+const int PIPE_CLIP_DIM = 48;
 
 class TextureText
 {
@@ -516,7 +517,7 @@ void Banner::setType(bool win)
 
 void Banner::render()
 {
-    SDL_Rect renderQuad = {((WIN_W / 2) - (BANNER_W / 2)), ((WIN_H / 2) - (BANNER_H / 2)), clip.w, clip.h};
+    SDL_Rect renderQuad = {((winW / 2) - (BANNER_W / 2)), ((winH / 2) - (BANNER_H / 2)), clip.w, clip.h};
     SDL_RenderCopyEx(gRenderer, texture, &clip, &renderQuad, 0.0, NULL, SDL_FLIP_NONE);
 }
 
@@ -549,8 +550,8 @@ int Pipe::getDirection()
 void Pipe::setType(int set_type)
 {
     type = set_type;
-    clip.w = PIPE_DIM;
-    clip.h = PIPE_DIM;
+    clip.w = PIPE_CLIP_DIM;
+    clip.h = PIPE_CLIP_DIM;
     switch (type)
     {
     case PIPE_STRAIGHT:
@@ -559,15 +560,15 @@ void Pipe::setType(int set_type)
         break;
     case PIPE_BEND:
         clip.x = 0;
-        clip.y = PIPE_DIM;
+        clip.y = PIPE_CLIP_DIM;
         break;
     case PIPE_START:
-        clip.x = PIPE_DIM;
+        clip.x = PIPE_CLIP_DIM;
         clip.y = 0;
         break;
     case PIPE_END:
-        clip.x = PIPE_DIM;
-        clip.y = PIPE_DIM;
+        clip.x = PIPE_CLIP_DIM;
+        clip.y = PIPE_CLIP_DIM;
         break;
     default:
         cout << "Warning: Invalid pipe type!" << endl;
@@ -580,8 +581,8 @@ void Pipe::render()
     SDL_Rect renderQuad;
     renderQuad.x = x;
     renderQuad.y = y;
-    renderQuad.w = clip.w;
-    renderQuad.h = clip.h;
+    renderQuad.w = pipeDim;
+    renderQuad.h = pipeDim;
     SDL_RenderCopyEx(gRenderer, pipe_texture, &clip, &renderQuad, direction, NULL, SDL_FLIP_NONE);
 }
 
@@ -591,7 +592,7 @@ void Pipe::handleEvent(SDL_Event* e)
     SDL_MouseButtonEvent mouseE;
     SDL_GetMouseState(&mouseX, &mouseY);
     // check that mouse is touching pipe
-    if (mouseX > x && mouseX < x + PIPE_DIM && mouseY < y + PIPE_DIM && mouseY > y)
+    if (mouseX > x && mouseX < x + pipeDim && mouseY < y + pipeDim && mouseY > y)
     {
         switch (e->type)
         {
@@ -677,10 +678,10 @@ void Pipe::toggleFlow()
         flow = !flow;
         if (flow)
         {
-            clip.y = PIPE_DIM * 2;
+            clip.y = PIPE_CLIP_DIM * 2;
             if (type == PIPE_BEND)
             {
-                clip.x = PIPE_DIM;
+                clip.x = PIPE_CLIP_DIM;
             }
         }
         else
@@ -689,7 +690,7 @@ void Pipe::toggleFlow()
             clip.y = 0;
             if (type == PIPE_BEND)
             {
-                clip.y = PIPE_DIM;
+                clip.y = PIPE_CLIP_DIM;
             }
         }
     }
@@ -1237,6 +1238,7 @@ Pump::~Pump()
 bool init()
 {
     bool success = true;
+    SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
         cout << "Error initialising! SDL_Error: " << SDL_GetError() << endl;
@@ -1244,7 +1246,16 @@ bool init()
     }
     else
     {
-        gWindow = SDL_CreateWindow("Plumbing Disaster", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
+#ifdef __ANDROID__
+        SDL_Rect screenBounds;
+        int gotBounds = SDL_GetDisplayUsableBounds(0, &screenBounds) == 0;
+        if (gotBounds) {
+            winW = screenBounds.h;
+            winH = screenBounds.w;
+            SDL_Log("Win w = %d, win h = %d", winW, winH);
+        }
+#endif
+        gWindow = SDL_CreateWindow("Plumbing Disaster", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, winW, winH, SDL_WINDOW_SHOWN);
         if (gWindow == NULL)
         {
             cout << "Error creating window! SDL_Error: " << SDL_GetError() << endl;
@@ -1252,6 +1263,12 @@ bool init()
         }
         else
         {
+#ifdef __ANDROID__
+            SDL_GetWindowSize(gWindow, &winH, &winW);
+            pipeDim = winH / 10;
+            SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+            SDL_SetWindowFullscreen(gWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+#endif
             gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if (gRenderer == NULL)
             {
@@ -1348,10 +1365,10 @@ bool loadMedia()
             cout << "Failed to create texture from surface! SDL_Error: " << SDL_GetError() << endl;
             success = false;
         }
-        buttons[BUTTON_E_SKIP] = new Button(WIN_W - (10 + BUTTON_W), 16, BUTTON_W, BUTTON_H, button_skip);
-        buttons[BUTTON_E_PUMP] = new Button(WIN_W - (10 + BUTTON_W), WIN_H - (BUTTON_H + 16), BUTTON_W, BUTTON_H, button_pump);
-        buttons[BUTTON_E_AGAIN] = new Button((WIN_W / 2) - (BUTTON_W / 2), WIN_H / 2, BUTTON_W, BUTTON_H, button_again);
-        buttons[BUTTON_E_MUTE] = new Button(WIN_W - (BUTTON_W / 2), (WIN_H / 3), 32, 32, button_mute);
+        buttons[BUTTON_E_SKIP] = new Button(winW - (10 + BUTTON_W), 16, BUTTON_W, BUTTON_H, button_skip);
+        buttons[BUTTON_E_PUMP] = new Button(winW - (10 + BUTTON_W), winH - (BUTTON_H + 16), BUTTON_W, BUTTON_H, button_pump);
+        buttons[BUTTON_E_AGAIN] = new Button((winW / 2) - (BUTTON_W / 2), winH / 2, BUTTON_W, BUTTON_H, button_again);
+        buttons[BUTTON_E_MUTE] = new Button(winW - (BUTTON_W / 2), (winH / 3), 32, 32, button_mute);
         banner = new Banner();
     }
     gFont = TTF_OpenFont("Fonts/Carlito-Regular.ttf", 28);
@@ -1424,7 +1441,7 @@ void newGame()
         {
             int randType = rand() % 2;
             delete pipes[row][column];
-            pipes[row][column] = new Pipe((column + 1) * PIPE_DIM, row * PIPE_DIM, row, column);
+            pipes[row][column] = new Pipe((column + 1) * pipeDim, row * pipeDim, row, column);
             pipes[row][column]->setType(randType);
             int randDir = rand() % 4;
             pipes[row][column]->setDirection(randDir);
@@ -1434,9 +1451,9 @@ void newGame()
     int endRow = rand() % TOTAL_ROWS;
     delete pipeStart;
     delete pipeEnd;
-    pipeStart = new Pipe(0, startRow * PIPE_DIM, startRow, -1);
+    pipeStart = new Pipe(0, startRow * pipeDim, startRow, -1);
     pipeStart->setType(PIPE_START);
-    pipeEnd = new Pipe((TOTAL_COLUMNS + 1) * PIPE_DIM, endRow * PIPE_DIM, endRow, TOTAL_COLUMNS);
+    pipeEnd = new Pipe((TOTAL_COLUMNS + 1) * pipeDim, endRow * pipeDim, endRow, TOTAL_COLUMNS);
     pipeEnd->setType(PIPE_END);
     pump->setPrevious(pipeStart);
     pump->setCurrentPipe(pipes[startRow][0]);
@@ -1488,7 +1505,7 @@ void renderAll()
             workingTime = false;
         }
     }
-    gTimerText.render((WIN_W - gTimerText.getWidth()) - (gTimerText.getWidth() / 2), WIN_H / 2);
+    gTimerText.render((winW - gTimerText.getWidth()) - (gTimerText.getWidth() / 2), winH / 2);
 }
 
 
