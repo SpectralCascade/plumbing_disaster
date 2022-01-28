@@ -60,7 +60,8 @@
                         "rm -r -Force obj",
                         "rm -r -Force bin",
                         "rm -r -Force \"{root}/{output}/{platform}/{mode}\""
-                    ]
+                    ],
+                    "abort_on_error": false
                 }
             }
         },
