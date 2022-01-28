@@ -92,19 +92,19 @@
             "tasks": {
                 "build": {
                     "steps": [
-                        "gradlew assemble{mode}"
+                        "./gradlew assemble{mode}"
                     ],
-                    "outputs": ["app/{mode}/app-{mode}.apk"]
+                    "outputs": ["app/build/outputs/apk/{mode}/"]
                 },
                 "build-bundle": {
                     "steps": [
-                        "gradlew bundle{mode}"
+                        "./gradlew bundle{mode}"
                     ],
-                    "outputs": ["app/{mode}/app-{mode}.aab"]
+                    "outputs": ["app/build/outputs/aab/{mode}/"]
                 },
-                "clean": { 
+                "clean": {
                     "steps": [
-                        "gradlew clean"
+                        "./gradlew clean"
                     ]
                 }
             }
