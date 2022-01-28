@@ -1,0 +1,112 @@
+{
+    "name": "PlumbingDisaster",
+    "source": "src",
+    "source-ext": [".cpp", ".c"],
+    "header-ext": [".h"],
+    "source-ignore": [],
+    "assets": "assets",
+    "assets-ignore": [],
+    "output": "soupbuild/outputs",
+    "work": "soupbuild/work",
+    "default-platform": "Windows",
+    "default-mode": "debug",
+    "default-task": "build",
+    "modes": {
+        "debug": {
+        },
+        "release": {
+        }
+    },
+    "platforms": {
+        "Windows": {
+            "template": {
+                "project": "templates/Windows",
+                "source": "src",
+                "assets": "assets",
+                "generate": {
+                    "soup_app_name": {
+                        "paths": ["plumbing_disaster.cbp"],
+                        "value": "{name}"
+                    },
+                    "soup_source_paths": {
+                        "all_source_files_separator": "\n        ",
+                        "all_source_files_formatter": "<Unit filename=\"{source_file}\" />",
+                        "paths": ["plumbing_disaster.cbp"],
+                        "value": "{all_source_files}"
+                    },
+                    "soup_header_paths": {
+                        "all_header_files_separator": "\n        ",
+                        "all_header_files_formatter": "<Unit filename=\"{header_file}\" />",
+                        "paths": ["plumbing_disaster.cbp"],
+                        "value": "{all_header_files}"
+                    }
+                }
+            },
+            "tasks": {
+                "generate_makefile": {
+                    "steps": [
+                        "cmd /c cbp2make.exe -in plumbing_disaster.cbp -out makefile.mak"
+                    ]
+                },
+                "build": {
+                    "steps": [
+                        "{run_task} Windows generate_makefile {mode}",
+                        "cmd /c C:\\msys64\\mingw64\\bin\\mingw32-make.exe {mode} -j 8"
+                    ],
+                    "outputs": ["bin/{mode}/{name}.exe", "{root}/assets"]
+                },
+                "clean": {
+                    "steps": [
+                        "rm -r -Force obj",
+                        "rm -r -Force bin",
+                        "rm -r -Force \"{root}/{output}/{platform}/{mode}\""
+                    ]
+                }
+            }
+        },
+        "Android": {
+            "template": {
+                "project": "templates/Android",
+                "source": "app/jni/src",
+                "assets": "app/src/main/assets/assets",
+                "generate": {
+                    "soup_app_name": {
+                        "paths": ["app/src/main/res/values/strings.xml"],
+                        "value": "{name}"
+                    },
+                    "soup_source_paths": {
+                        "all_source_files_separator": " ",
+                        "all_source_files_format": "\"{source_file}\"",
+                        "paths": ["app/jni/Android.mk"],
+                        "value": "{all_source_files}"
+                    },
+                    "soup_header_paths": {
+                        "all_header_files_separator": " ",
+                        "all_header_files_format": "\"{header_file}\"",
+                        "paths": ["app/jni/Android.mk"],
+                        "value": "{all_header_files}"
+                    }
+                }
+            },
+            "tasks": {
+                "build": {
+                    "steps": [
+                        "gradlew assemble{mode}"
+                    ],
+                    "outputs": ["app/{mode}/app-{mode}.apk"]
+                },
+                "build-bundle": {
+                    "steps": [
+                        "gradlew bundle{mode}"
+                    ],
+                    "outputs": ["app/{mode}/app-{mode}.aab"]
+                },
+                "clean": { 
+                    "steps": [
+                        "gradlew clean"
+                    ]
+                }
+            }
+        }
+    }
+}
