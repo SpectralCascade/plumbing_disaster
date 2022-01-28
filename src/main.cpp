@@ -1297,7 +1297,7 @@ bool loadMedia()
 {
     bool success = true;
     SDL_Surface* loadedSurface = NULL;
-    loadedSurface = SDL_LoadBMP("Textures/pipes.bmp");
+    loadedSurface = SDL_LoadBMP("assets/Textures/pipes.bmp");
     if (loadedSurface == NULL)
     {
         cout << "Error loading image pipes.bmp! SDL_Error: " << SDL_GetError() << endl;
@@ -1315,7 +1315,7 @@ bool loadMedia()
             cout << "Failed to create texture from surface! SDL_Error: " << SDL_GetError() << endl;
             success = false;
         }
-        loadedSurface = SDL_LoadBMP("Textures/button_skip.bmp");
+        loadedSurface = SDL_LoadBMP("assets/Textures/button_skip.bmp");
         newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
         SDL_FreeSurface(loadedSurface);
         loadedSurface = NULL;
@@ -1325,7 +1325,7 @@ bool loadMedia()
             cout << "Failed to create texture from surface! SDL_Error: " << SDL_GetError() << endl;
             success = false;
         }
-        loadedSurface = SDL_LoadBMP("Textures/button_again.bmp");
+        loadedSurface = SDL_LoadBMP("assets/Textures/button_again.bmp");
         newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
         SDL_FreeSurface(loadedSurface);
         loadedSurface = NULL;
@@ -1335,7 +1335,7 @@ bool loadMedia()
             cout << "Failed to create texture from surface! SDL_Error: " << SDL_GetError() << endl;
             success = false;
         }
-        loadedSurface = SDL_LoadBMP("Textures/button_pump.bmp");
+        loadedSurface = SDL_LoadBMP("assets/Textures/button_pump.bmp");
         newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
         SDL_FreeSurface(loadedSurface);
         loadedSurface = NULL;
@@ -1345,7 +1345,7 @@ bool loadMedia()
             cout << "Failed to create texture from surface! SDL_Error: " << SDL_GetError() << endl;
             success = false;
         }
-        loadedSurface = SDL_LoadBMP("Textures/banner.bmp");
+        loadedSurface = SDL_LoadBMP("assets/Textures/banner.bmp");
         newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
         SDL_FreeSurface(loadedSurface);
         loadedSurface = NULL;
@@ -1355,7 +1355,7 @@ bool loadMedia()
             cout << "Failed to create texture from surface! SDL_Error: " << SDL_GetError() << endl;
             success = false;
         }
-        loadedSurface = SDL_LoadBMP("Textures/mute.bmp");
+        loadedSurface = SDL_LoadBMP("assets/Textures/mute.bmp");
         newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
         SDL_FreeSurface(loadedSurface);
         loadedSurface = NULL;
@@ -1371,14 +1371,14 @@ bool loadMedia()
         buttons[BUTTON_E_MUTE] = new Button(winW - (BUTTON_W / 2), (winH / 3), 32, 32, button_mute);
         banner = new Banner();
     }
-    gFont = TTF_OpenFont("Fonts/Carlito-Regular.ttf", 28);
+    gFont = TTF_OpenFont("assets/Fonts/Carlito-Regular.ttf", 28);
     if (gFont == NULL)
     {
         cout << "Error! Unable to open font. TTF_Error: " << TTF_GetError() << endl;
     }
-    gWaterFlow = Mix_LoadWAV("Sounds/flow.wav");
-    gTurnPipe = Mix_LoadWAV("Sounds/turn.wav");
-    gButtonClick = Mix_LoadWAV("Sounds/click.wav");
+    gWaterFlow = Mix_LoadWAV("assets/Sounds/flow.wav");
+    gTurnPipe = Mix_LoadWAV("assets/Sounds/turn.wav");
+    gButtonClick = Mix_LoadWAV("assets/Sounds/click.wav");
     if (gWaterFlow == NULL || gTurnPipe == NULL || gButtonClick == NULL)
     {
         cout << "Error loading one or more WAV files! Mix_Error: " << Mix_GetError() << endl;
