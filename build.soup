@@ -21,25 +21,25 @@
         "Windows": {
             "dependencies": {
                 "SDL2": {
-                    "version": "2.24.0",
-                    "source": "https://www.libsdl.org/release/SDL2-devel-{version}-mingw.zip",
+                    "version": "2.0.22",
+                    "source": "https://www.libsdl.org/release/SDL2-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/release/SDL2-{version}-win32-x64.zip",
-                    "includes": [],
-                    "libs": []
+                    "includes": ["SDL2-{version}/x86_64-w64-mingw32/include", "SDL2-{version}/x86_64-w64-mingw32/include/SDL2"],
+                    "libs": ["SDL2-{version}/x86_64-w64-mingw32/lib"]
                 },
                 "SDL2_mixer": {
                     "version": "2.6.2",
-                    "source": "https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-{version}-mingw.zip",
+                    "source": "https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-{version}-win32-x64.zip",
-                    "includes": [],
-                    "libs": []
+                    "includes": ["SDL2_mixer-{version}/x86_64-w64-mingw32/include", "SDL2_mixer-{version}/x86_64-w64-mingw32/include/SDL2"],
+                    "libs": ["SDL2_mixer-{version}/x86_64-w64-mingw32/lib"]
                 },
                 "SDL2_ttf": {
                     "version": "2.20.1",
-                    "source": "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-{version}-mingw.zip",
+                    "source": "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-{version}-win32-x64.zip",
-                    "includes": [],
-                    "libs": []
+                    "includes": ["SDL2_ttf-{version}/x86_64-w64-mingw32/include", "SDL2_ttf-{version}/x86_64-w64-mingw32/include/SDL2"],
+                    "libs": ["SDL2_ttf-{version}/x86_64-w64-mingw32/lib"]
                 }
             },
             "template": {
@@ -52,16 +52,28 @@
                         "value": "{name}"
                     },
                     "soup_source_paths": {
-                        "all_source_files_separator": "\n        ",
-                        "all_source_files_formatter": "<Unit filename=\"{source_file}\" />",
+                        "separator": "\n        ",
+                        "formatter": "<Unit filename=\"{item}\" />",
                         "paths": ["plumbing_disaster.cbp"],
                         "value": "{all_source_files}"
                     },
                     "soup_header_paths": {
-                        "all_header_files_separator": "\n        ",
-                        "all_header_files_formatter": "<Unit filename=\"{header_file}\" />",
+                        "separator": "\n        ",
+                        "formatter": "<Unit filename=\"{item}\" />",
                         "paths": ["plumbing_disaster.cbp"],
                         "value": "{all_header_files}"
+                    },
+                    "soup_include_paths": {
+                        "separator": "\n                    ",
+                        "formatter": "<Add directory=\"{item}\" />",
+                        "paths": ["plumbing_disaster.cbp"],
+                        "value": "{all_include_paths}"
+                    },
+                    "soup_lib_paths": {
+                        "separator": "\n                    ",
+                        "formatter": "<Add directory=\"{item}\" />",
+                        "paths": ["plumbing_disaster.cbp"],
+                        "value": "{all_lib_paths}"
                     }
                 }
             },
