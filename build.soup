@@ -19,29 +19,32 @@
     },
     "platforms": {
         "Windows": {
-            "dependencies": {
-                "SDL2": {
+            "dependencies": [
+                {
+                    "name": "SDL2",
                     "version": "2.0.22",
                     "source": "https://www.libsdl.org/release/SDL2-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/release/SDL2-{version}-win32-x64.zip",
                     "includes": ["SDL2-{version}/x86_64-w64-mingw32/include", "SDL2-{version}/x86_64-w64-mingw32/include/SDL2"],
                     "libs": ["SDL2-{version}/x86_64-w64-mingw32/lib"]
                 },
-                "SDL2_mixer": {
+                {
+                    "name": "SDL2_mixer",
                     "version": "2.6.2",
                     "source": "https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-{version}-win32-x64.zip",
                     "includes": ["SDL2_mixer-{version}/x86_64-w64-mingw32/include", "SDL2_mixer-{version}/x86_64-w64-mingw32/include/SDL2"],
                     "libs": ["SDL2_mixer-{version}/x86_64-w64-mingw32/lib"]
                 },
-                "SDL2_ttf": {
+                {
+                    "name": "SDL2_ttf",
                     "version": "2.20.1",
                     "source": "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-{version}-win32-x64.zip",
                     "includes": ["SDL2_ttf-{version}/x86_64-w64-mingw32/include", "SDL2_ttf-{version}/x86_64-w64-mingw32/include/SDL2"],
                     "libs": ["SDL2_ttf-{version}/x86_64-w64-mingw32/lib"]
                 }
-            },
+            ],
             "template": {
                 "project": "templates/Windows",
                 "source": "src",
@@ -86,7 +89,7 @@
                 "build": {
                     "steps": [
                         "{run_task} Windows generate_makefile {mode}",
-                        "cmd /c C:\\msys64\\mingw64\\bin\\mingw32-make.exe {mode} -j 8"
+                        "cmd /c mingw32-make {mode} -j 8"
                     ],
                     "outputs": ["bin/{mode}/{name}.exe", "{root}/assets"]
                 },
