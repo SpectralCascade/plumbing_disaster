@@ -46,24 +46,24 @@
                 },
                 {
                     "name": "bx",
-                    "version": "2022.09.02",
-                    "source": "https://github.com/bkaradzic/bx/archive/refs/heads/master.zip",
+                    "version": "2022.09.12",
+                    "source": "https://github.com/bkaradzic/bx/archive/a2dff8e0a0ecf705b264062656b3ddc1c9bd4569.zip",
                     "includes": ["include"],
                     "libs": [],
                     "build": ["robocopy -E -IT . ../bx > nul"]
                 },
                 {
                     "name": "bimg",
-                    "version": "2022.09.02",
-                    "source": "https://github.com/bkaradzic/bimg/archive/refs/heads/master.zip",
+                    "version": "2022.09.12",
+                    "source": "https://github.com/bkaradzic/bimg/archive/90ac47dfb0ac21e602ed46a91fcc34016e565b98.zip",
                     "includes": ["include"],
                     "libs": [],
                     "build": ["robocopy -E -IT . ../bimg > nul"]
                 },
                 {
                     "name": "bgfx",
-                    "version": "2022.09.02",
-                    "source": "https://github.com/bkaradzic/bgfx/archive/refs/heads/master.zip",
+                    "version": "2022.09.12",
+                    "source": "https://github.com/bkaradzic/bgfx/archive/cb439deae3a2c85275b41645da6e25a5f805144a.zip",
                     "includes": ["include"],
                     "libs": [],
                     "build": [
