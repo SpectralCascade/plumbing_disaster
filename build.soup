@@ -25,24 +25,51 @@
                     "version": "2.0.22",
                     "source": "https://www.libsdl.org/release/SDL2-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/release/SDL2-{version}-win32-x64.zip",
-                    "includes": ["SDL2-{version}/x86_64-w64-mingw32/include", "SDL2-{version}/x86_64-w64-mingw32/include/SDL2"],
-                    "libs": ["SDL2-{version}/x86_64-w64-mingw32/lib"]
+                    "includes": ["x86_64-w64-mingw32/include", "x86_64-w64-mingw32/include/SDL2"],
+                    "libs": ["x86_64-w64-mingw32/lib"]
                 },
                 {
                     "name": "SDL2_mixer",
                     "version": "2.6.2",
                     "source": "https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-{version}-win32-x64.zip",
-                    "includes": ["SDL2_mixer-{version}/x86_64-w64-mingw32/include", "SDL2_mixer-{version}/x86_64-w64-mingw32/include/SDL2"],
-                    "libs": ["SDL2_mixer-{version}/x86_64-w64-mingw32/lib"]
+                    "includes": ["x86_64-w64-mingw32/include", "x86_64-w64-mingw32/include/SDL2"],
+                    "libs": ["x86_64-w64-mingw32/lib"]
                 },
                 {
                     "name": "SDL2_ttf",
                     "version": "2.20.1",
                     "source": "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-{version}-mingw.tar.gz",
                     "shared": "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-{version}-win32-x64.zip",
-                    "includes": ["SDL2_ttf-{version}/x86_64-w64-mingw32/include", "SDL2_ttf-{version}/x86_64-w64-mingw32/include/SDL2"],
-                    "libs": ["SDL2_ttf-{version}/x86_64-w64-mingw32/lib"]
+                    "includes": ["x86_64-w64-mingw32/include", "x86_64-w64-mingw32/include/SDL2"],
+                    "libs": ["x86_64-w64-mingw32/lib"]
+                },
+                {
+                    "name": "bx",
+                    "version": "2022.09.02",
+                    "source": "https://github.com/bkaradzic/bx/archive/refs/heads/master.zip",
+                    "includes": ["include"],
+                    "libs": [],
+                    "build": ["robocopy -E -IT . ../bx > nul"]
+                },
+                {
+                    "name": "bimg",
+                    "version": "2022.09.02",
+                    "source": "https://github.com/bkaradzic/bimg/archive/refs/heads/master.zip",
+                    "includes": ["include"],
+                    "libs": [],
+                    "build": ["robocopy -E -IT . ../bimg > nul"]
+                },
+                {
+                    "name": "bgfx",
+                    "version": "2022.09.02",
+                    "source": "https://github.com/bkaradzic/bgfx/archive/refs/heads/master.zip",
+                    "includes": ["include"],
+                    "libs": [],
+                    "build": [
+                        "../bx/tools/bin/windows/genie --with-shared-lib --gcc=mingw-gcc gmake",
+                        "mingw32-make config=release bgfx-shared-lib -C .build/projects/gmake-mingw-gcc/ -j {cpu_count}"
+                    ]
                 }
             ],
             "template": {
@@ -86,12 +113,17 @@
                         "cmd /c cbp2make.exe -in plumbing_disaster.cbp -out makefile.mak"
                     ]
                 },
+                "setup_deps": {
+                    "steps": []
+                },
                 "build": {
                     "steps": [
                         "{run_task} Windows generate_makefile {mode}",
-                        "cmd /c mingw32-make {mode} -j 8"
+                        "{run_task} Windows setup_deps {mode}",
+                        "cmd /c mingw32-make {mode} -j {cpu_count}"
                     ],
-                    "outputs": ["bin/{mode}/{name}.exe", "{root}/assets"]
+                    "outputs": ["bin/{mode}/{name}.exe", "{root}/assets"],
+                    "output_shared": true
                 },
                 "clean": {
                     "steps": [
