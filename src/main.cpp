@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
+#include "bgfx/bgfx.h"
 
 using namespace std;
 
@@ -1290,6 +1291,8 @@ bool init()
             }
         }
     }
+    
+    bgfx::init();
     return success;
 }
 

@@ -68,10 +68,12 @@
                     "libs": ["libs"],
                     "build": [
                         "../bx/tools/bin/windows/genie --with-shared-lib --gcc=mingw-gcc gmake",
+                        "mingw32-make config=release bgfx -C .build/projects/gmake-mingw-gcc/ -j {cpu_count}",
                         "mingw32-make config=release bgfx-shared-lib -C .build/projects/gmake-mingw-gcc/ -j {cpu_count}",
                         "mkdir libs > nul",
                         "robocopy -IT ../bx/scripts ./libs libbxRelease.a > nul",
                         "robocopy -IT ../bimg/scripts ./libs libbimgRelease.a > nul",
+                        "robocopy -IT ./scripts ./libs libbgfxRelease.a > nul",
                         "robocopy -IT ./scripts ./libs libbgfx-shared-libRelease.a > nul",
                         "mkdir ../../shared > nul",
                         "mkdir ../../shared/bgfx-{version} > nul",

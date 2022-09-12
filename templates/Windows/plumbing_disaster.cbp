@@ -23,6 +23,11 @@
 					<Add option="-lSDL2" />
 					<Add option="-lSDL2_mixer" />
 					<Add option="-lSDL2_ttf" />
+                    <Add option="-lbgfxRelease" />
+                    <Add option="-lbgfx-shared-libRelease" />
+                    <Add option="-lbimgRelease" />
+                    <Add option="-lbxRelease" />
+                    <Add option="-lgdi32" />
 					{soup_lib_paths}
 					<Add option="-Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -static-libgcc -static-libstdc++" />
 				</Linker>
@@ -44,6 +49,11 @@
 					<Add option="-lSDL2" />
 					<Add option="-lSDL2_mixer" />
 					<Add option="-lSDL2_ttf" />
+                    <Add option="-lbgfxRelease" />
+                    <Add option="-lbgfx-shared-libRelease" />
+                    <Add option="-lbimgRelease" />
+                    <Add option="-lbxRelease" />
+                    <Add option="-lgdi32" />
 					{soup_lib_paths}
 					<Add option="-Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -static-libgcc -static-libstdc++" />
 				</Linker>
