@@ -73,11 +73,7 @@
                         "mkdir libs > nul",
                         "robocopy -IT ../bx/scripts ./libs libbxRelease.a > nul",
                         "robocopy -IT ../bimg/scripts ./libs libbimgRelease.a > nul",
-                        "robocopy -IT ./scripts ./libs libbgfxRelease.a > nul",
-                        "robocopy -IT ./scripts ./libs libbgfx-shared-libRelease.a > nul",
-                        "mkdir ../../shared > nul",
-                        "mkdir ../../shared/bgfx-{version} > nul",
-                        "robocopy -IT ./scripts ../../shared/bgfx-{version} bgfx-shared-libRelease.dll > nul"
+                        "robocopy -IT ./scripts ./libs libbgfxRelease.a > nul"
                     ]
                 }
             ],

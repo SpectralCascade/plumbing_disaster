@@ -24,7 +24,6 @@
 					<Add option="-lSDL2_mixer" />
 					<Add option="-lSDL2_ttf" />
                     <Add option="-lbgfxRelease" />
-                    <Add option="-lbgfx-shared-libRelease" />
                     <Add option="-lbimgRelease" />
                     <Add option="-lbxRelease" />
                     <Add option="-lgdi32" />
@@ -50,7 +49,6 @@
 					<Add option="-lSDL2_mixer" />
 					<Add option="-lSDL2_ttf" />
                     <Add option="-lbgfxRelease" />
-                    <Add option="-lbgfx-shared-libRelease" />
                     <Add option="-lbimgRelease" />
                     <Add option="-lbxRelease" />
                     <Add option="-lgdi32" />
