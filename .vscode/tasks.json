@@ -1,0 +1,77 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Build Windows (Debug)",
+			"command": "python3",
+			"args": [
+				"../Soupbuild/soupbuild.py",
+				"Windows",
+				"build",
+				"debug"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "Build Windows (Release)",
+			"command": "python3",
+			"args": [
+				"../Soupbuild/soupbuild.py",
+				"Windows",
+				"build",
+				"release"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "Clean",
+			"command": "python3",
+			"args": [
+				"../Soupbuild/soupbuild.py",
+				"Windows",
+				"clean",
+				"--task-only"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"label": "Clean Dependencies",
+			"command": "python3",
+			"args": [
+				"../Soupbuild/soupbuild.py",
+				"Windows",
+				"clean_deps",
+				"--task-only"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		}
+	]
+}
